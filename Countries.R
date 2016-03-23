@@ -46,8 +46,8 @@ getNumberofRounds <- function(country) {
 }
 
 getRounds <- function(country){
-	regexp <- "Round\\s[0-9]\\sdata"
-	countrypage <- read_html(paste(startpage,combined[grepl(tolower(country),tolower(countries)),2],sep="",collapse="")) %>%
+	regexp <- paste(substr(country,nchar(country)-3,nchar(country)),"\\sRound\\s[0-9]\\sdata",sep="",collapse="")
+	countrypage <- read_html(paste(startpage,combined[grepl(tolower(country),tolower(countries)),2],sep="",collapse=""),encoding='UTF-8') %>%
 	               html_nodes('div a')
 	countryrounds <- countrypage[unlist(lapply(countrypage, function(x) grepl("View more",html_text(x))))] %>% 
                extract(4:4) %>% html_attr('href')%>% 
