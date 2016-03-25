@@ -1,6 +1,7 @@
 library(magrittr)
 library(rvest)
 library(xml2)
+library(stringi)
 
 startpage <- "http://www.afrobarometer.org"
 mainpage <- read_html("http://www.afrobarometer.org/countries", encoding ="UTF-8")
@@ -31,7 +32,7 @@ getCountries <- function() {
              gsub('Ã´','o',.)
     countries <- countries %>%
              lapply(.,function(x) nchar(x)>0) %>%
-             unlist() %>% countries[.] %>% repair_encoding()
+             unlist() %>% countries[.] %>% stringi::stri_conv(.,from=guess_encoding(.)[1,,drop=FALSE]$encoding)
     return(countries)
 }
 
@@ -46,13 +47,13 @@ getNumberofRounds <- function(country) {
 }
 
 getRounds <- function(country){
-	regexp <- paste(substr(country,nchar(country)-3,nchar(country)),"\\sRound\\s[0-9]\\sdata",sep="",collapse="")
+	regexp <- paste0(substr(country,nchar(country)-3,nchar(country)),"\\sRound\\s[0-9]\\sdata",sep="",collapse="")
 	countrypage <- read_html(paste(startpage,combined[grepl(tolower(country),tolower(countries)),2],sep="",collapse=""),encoding='UTF-8') %>%
 	               html_nodes('div a')
 	countryrounds <- countrypage[unlist(lapply(countrypage, function(x) grepl("View more",html_text(x))))] %>% 
                extract(4:4) %>% html_attr('href')%>% 
-               read_html() %>% html_nodes('div a') %>% 
-               .[grepl(regexp,html_text(.),ignore.case=TRUE)] %>% html_text(.,trim=TRUE) %>% repair_encoding()
+               read_html(.,encoding='UTF-8') %>% html_nodes('div a') %>% 
+               .[grepl(regexp,html_text(.),ignore.case=TRUE)] %>% html_text(.,trim=TRUE)
 	return(countryrounds)
 }
 
