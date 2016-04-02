@@ -1,0 +1,8 @@
+Package: AfroData
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: person("Abdou", "Seck", email = "djily02016@gmail.com", role = c("aut", "cre"))
+Description: A wrapper for Afrobarometer's datasets
+License: Pending...
+LazyData: TRUE

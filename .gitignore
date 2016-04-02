@@ -1,2 +1,6 @@
 *.RData
 *.Rhistory
+*.DS_Store
+.Rproj.user
+.httr-oauth
+*.Rds
