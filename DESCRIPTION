@@ -1,8 +1,17 @@
 Package: AfroData
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A wrapper for Afrobarometer's datasets.
 Version: 0.1.0
 Authors@R: person("Abdou", "Seck", email = "djily02016@gmail.com", role = c("aut", "cre"))
 Description: A wrapper for Afrobarometer's datasets
 License: Pending...
 LazyData: TRUE
+Imports:
+    magrittr,
+    xml2,
+    rvest,
+    stringi,
+    roxygen2,
+    haven,
+    rio
+RoxygenNote: 5.0.1
