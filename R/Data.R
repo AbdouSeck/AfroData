@@ -1,5 +1,22 @@
 
-getRoundData <- function(country,round=1,..) {
+#' getRoundData
+#'
+#' @param country A string character representation of the country whose round data you're looking to get.
+#' @param round The given round from which you are grabbing data. The default value is 1.
+#'
+#' @return A data frame with rows converted into their numeric values from the survey codebook. Please work with the codebook
+#' @export
+#'
+#' @examples
+#'
+#' sen_r1 <- getRoundData(country='Senegal',round=1)
+#' internet_usage <- sen_r1 %>% dplyr::select(Q92B) %>%
+#'    dplyr::mutate(CellUsage = Q92B)) %>%
+#'    dplyr::select(CellUsage)
+#'str(internet)
+#'
+#'
+getRoundData <- function(country,round=1) {
 	if(is.na(country) || is.na(round) || !is.numeric(round)) {
 		stop("Country and/or round variable missing.")
 	} else if(is.numeric(round) && round > 6){
@@ -40,7 +57,8 @@ getRoundData <- function(country,round=1,..) {
 	  df1 <- data.frame(rounds,links)
 	  data <- read_html(as.character(df1$links[round]),encoding='UTF-8') %>%
 	    html_nodes('div span a') %>% extract(1:1) %>% html_attr('href') %>%
-	    as.character() %>% rio::import(.,haven=FALSE, reencode='UTF-8')
-	  return(data)
+	    as.character()
+	  df3 <- getfiledata(country, round, data)
+	  return(df3)
 	}
 }

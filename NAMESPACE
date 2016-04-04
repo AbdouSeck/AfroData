@@ -2,4 +2,5 @@
 
 export(getCountries)
 export(getNumberofRounds)
+export(getRoundData)
 export(getRounds)
