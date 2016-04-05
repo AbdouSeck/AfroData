@@ -54,7 +54,7 @@ getRoundData <- function(country,round=1) {
 	  links <- countryrounds %>% html_attr('href') %>%
 	    lapply(.,function(x) paste(startpage,x,sep="",collapse="")) %>%
 	    unlist()
-	  df1 <- data.frame(rounds,links)
+	  df1 <- data.frame(rounds,links) %>% .[nrow(.):1,]
 	  data <- read_html(as.character(df1$links[round]),encoding='UTF-8') %>%
 	    html_nodes('div span a') %>% extract(1:1) %>% html_attr('href') %>%
 	    as.character()

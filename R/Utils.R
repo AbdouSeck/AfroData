@@ -4,7 +4,7 @@ getfiledata <- function(country, round = 1, urlpath) {
   if (!dir.exists(paste(getwd(),"AfroData",sep="/",collapse=""))) {
     dir.create("AfroData")
   }
-  filemeta <- curl::curl_fetch_disk(url=urlpath, path=paste("AfroData/",country,"Round",round,"data", sep="", collapse=""))
+  filemeta <- curl::curl_fetch_disk(url=urlpath, path=paste("AfroData/",country,"Round",round,"data.sav", sep="", collapse=""))
   filename <- filemeta$content
   df2 <- haven::read_sav(filename)
   return(df2)

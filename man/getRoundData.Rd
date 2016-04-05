@@ -9,7 +9,7 @@ getRoundData(country, round = 1)
 \arguments{
 \item{country}{A string character representation of the country whose round data you're looking to get.}
 
-\item{round}{The given round from which you are grabbing data}
+\item{round}{The given round from which you are grabbing data. The default value is 1.}
 }
 \value{
 A data frame with rows converted into their numeric values from the survey codebook. Please work with the codebook
