@@ -6,6 +6,6 @@ getfiledata <- function(country, round = 1, urlpath) {
   }
   filemeta <- curl::curl_fetch_disk(url=urlpath, path=paste("AfroData/",country,"Round",round,"data.sav", sep="", collapse=""))
   filename <- filemeta$content
-  df2 <- haven::read_sav(filename)
+  df2 <- haven::read_sav(filename) %>% as.data.frame()
   return(df2)
 }
