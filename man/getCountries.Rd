@@ -14,6 +14,7 @@ Useful helper getting all the available countries on Afrobarometer's site.
 The listing of a country does not indicate that Afrobarometer has data on that country.
 }
 \examples{
+#List all the countries on which the organization conducts surveys
 allcountries <- getCountries()
 ifelse("Senegal" \%in\% allcountries, "Senegal is handled by Afrobarometer.", "Senegal is not handled.")
 }

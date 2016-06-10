@@ -16,6 +16,7 @@ The number of rounds a given country has. Equivalent of \code{length(getRounds(c
 Same thing as getRounds, but only returns the number of rounds.
 }
 \examples{
+#getting the number of rounds for Senegal
 sen_roundnum <- getNumberofRounds(country='Senegal')
 paste('Senegal has ',sen_roundnum, ' rounds of data',sep="",collapse="")
 

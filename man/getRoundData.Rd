@@ -12,18 +12,19 @@ getRoundData(country, round = 1)
 \item{round}{The given round from which you are grabbing data. The default value is 1.}
 }
 \value{
-A data frame with rows converted into their numeric values from the survey codebook. Please work with the codebook
+A dataframe with rows converted into their numeric values from the survey codebook. Please work with the codebook
 }
 \description{
-getRoundData
+Gets a dataset for a given country and round. The default value of round is 1
 }
 \examples{
 
+#Extracting a column to check the level of internet usage
 sen_r1 <- getRoundData(country='Senegal',round=1)
 internet_usage <- sen_r1 \%>\% dplyr::select(Q92B) \%>\%
    dplyr::mutate(CellUsage = Q92B)) \%>\%
    dplyr::select(CellUsage)
-str(internet)
+str(internet_usage)
 
 
 }

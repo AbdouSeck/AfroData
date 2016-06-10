@@ -13,21 +13,20 @@ devtools::install_github('AbdouSeck/AfroData')
 ## Usage
 
 ```
-getCountries() # to get the countries available
+getCountries() # to get the countries available.
 getRounds(countryname) # to get the rounds of a specific country.
-getNumberofRounds(countryname) # get the number of rounds of a specific country
-getRoundData(country, round) # fetch the data for a specific round
-
+getNumberofRounds(countryname) # get the number of rounds of a specific country.
+getRoundData(country, round) # fetch the data for a specific round.
+getMergedRounds() # get all the rounds for which there is a merged dataset available.
+getMergedData(roundNumber) # get the merged dataset for a given round.
 ```
 ## To do:
 
-1. Adding functions for fetching merged datasets
+1. Adding more features (i.e. getting the codebook and specifying whether to read the data with haven's `read_sav` or foreign's `read.spss`).
 
-2. Adding more features (i.e. getting the codebook and specifying whether to read the data with haven's `read_sav` or foreign's `read.spss`).
+2. Working on vectorizing the functions, so that it becomes possible to fetch more than one dataset at a time.
 
-3. Working on vectorizing the functions, so that it becomes possible to fetch more than one dataset at a time.
-
-4. Using some form of memoization to cache the results (this is much needed since each function call is quite expensive).
+3. Using some form of memoization to cache the results (this is much needed since each function call is quite expensive).
 
 
 
@@ -47,4 +46,4 @@ getRoundData(country, round) # fetch the data for a specific round
 Afrobarometer Data, [All Countries, [All Rounds], [All Available Years]
 
 ## License
-License: pending...
+License: MIT License
