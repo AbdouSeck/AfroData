@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples
+#' #List all the countries on which the organization conducts surveys
 #' allcountries <- getCountries()
 #' ifelse("Senegal" %in% allcountries, "Senegal is handled by Afrobarometer.", "Senegal is not handled.")
 getCountries <- function() {
@@ -81,9 +82,29 @@ getRounds <- function(country){
 #' @export
 #'
 #' @examples
+#' #getting the number of rounds for Senegal
 #' sen_roundnum <- getNumberofRounds(country='Senegal')
 #' paste('Senegal has ',sen_roundnum, ' rounds of data',sep="",collapse="")
 #'
 getNumberofRounds <- function(country) {
   return(getRounds(country) %>% length())
+}
+
+#' getMergedRounds
+#'
+#'Gets the all the rounds for which merged datasets are available
+#'
+#' @return A list of all the rounds for which there is a merged dataset available
+#' @export
+#'
+#' @examples
+#'
+#' #Basic call
+#' allrounds <- getMergedRounds()
+#' allrounds
+#'
+getMergedRounds <- function() {
+  mergedpage <- read_html("http://afrobarometer.org/data/merged-data", encoding="UTF-8")
+  Rounds <- mergedpage %>% html_nodes('li a') %>% extract(39:48) %>% html_text() %>% extract(seq(1,10,2))
+  return(Rounds)
 }

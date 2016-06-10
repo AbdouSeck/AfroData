@@ -1,19 +1,22 @@
 
 #' getRoundData
 #'
+#' Gets a dataset for a given country and round. The default value of round is 1
+#'
 #' @param country A string character representation of the country whose round data you're looking to get.
 #' @param round The given round from which you are grabbing data. The default value is 1.
 #'
-#' @return A data frame with rows converted into their numeric values from the survey codebook. Please work with the codebook
+#' @return A dataframe with rows converted into their numeric values from the survey codebook. Please work with the codebook
 #' @export
 #'
 #' @examples
 #'
+#'#Extracting a column to check the level of internet usage
 #' sen_r1 <- getRoundData(country='Senegal',round=1)
 #' internet_usage <- sen_r1 %>% dplyr::select(Q92B) %>%
 #'    dplyr::mutate(CellUsage = Q92B)) %>%
 #'    dplyr::select(CellUsage)
-#'str(internet)
+#'str(internet_usage)
 #'
 #'
 getRoundData <- function(country,round=1) {
@@ -61,4 +64,35 @@ getRoundData <- function(country,round=1) {
 	  df3 <- getfiledata(country, round, data)
 	  return(df3)
 	}
+}
+
+#' getMergedData
+#'
+#' Gets a marged dataset for a given round. The default value is round 1.
+#'
+#' @param roundNumber An integer to indicate the round from which you are getting the data
+#'
+#' @return A dataframe with rows converted into their numeric values from the survey codebook. Please work with the codebook
+#' @export
+#'
+#' @examples
+#' #Extracting a column to check what citizens think about their freedom of expression
+#' merged5 <- getMergedData(roundNumber = 5)
+#' expression_freedom <- merged5 %>% dplyr::select(Q17A) %>%
+#'  dplyr::mutate(express_freedom = Q17A) %>%
+#'  dplyr::select(express_freedom)
+#'str(expression_freedom)
+#'
+getMergedData <- function(roundNumber = 1) {
+  startpage <- "http://www.afrobarometer.org"
+	if(is.na(roundNumber) || !is.numeric(roundNumber)) stop("The round variable should be a number, not an NA or string")
+  if(roundNumber > length(getMergedRounds())) stop("The round number must be less than or equal to the output of getMergedRounds()")
+  mergedpage <- read_html("http://afrobarometer.org/data/merged-data", encoding="UTF-8")
+  Links <- mergedpage %>% html_nodes('li a') %>% html_attr('href') %>% extract(39:48) %>%
+    extract(seq(1,10,2))
+  MergedLink <- paste(startpage,grep(paste("round",roundNumber,sep = "-",collapse=""),Links,value = T),sep="",collapse="")
+  MergedLink <- read_html(MergedLink, encoding = "UTF-8") %>% html_nodes('div span a') %>% extract(2:2) %>% html_attr('href') %>%
+    as.character()
+  MergedData <- getfilemerged(roundNumber, MergedLink)
+  return(MergedData)
 }
