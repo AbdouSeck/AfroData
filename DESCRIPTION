@@ -7,12 +7,12 @@ Description: A wrapper for Afrobarometer's datasets
 License: MIT License
 LazyData: TRUE
 Imports:
-    xml2
-    rvest
-    httr,
-    magrittr,
-    stringi,
-    roxygen2,
-    haven,
-    curl
+  xml2,
+  rvest,
+  httr,
+  magrittr,
+  stringi,
+  roxygen2,
+  haven,
+  curl
 RoxygenNote: 5.0.1
