@@ -15,13 +15,4 @@ Imports:
     roxygen2,
     haven,
     curl
-Suggests:
-    xml2
-    rvest
-    httr,
-    magrittr,
-    stringi,
-    roxygen2,
-    haven,
-    curl
 RoxygenNote: 5.0.1
