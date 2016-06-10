@@ -4,13 +4,22 @@ Title: A wrapper for Afrobarometer's datasets.
 Version: 0.1.0
 Authors@R: person("Abdou", "Seck", email = "djily02016@gmail.com", role = c("aut", "cre"))
 Description: A wrapper for Afrobarometer's datasets
-License: Pending...
+License: MIT License
 LazyData: TRUE
 Imports:
+    xml2
+    rvest
     httr,
     magrittr,
-    xml2,
-    rvest,
+    stringi,
+    roxygen2,
+    haven,
+    curl
+Suggests:
+    xml2
+    rvest
+    httr,
+    magrittr,
     stringi,
     roxygen2,
     haven,
