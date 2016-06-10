@@ -15,7 +15,7 @@
 #' ifelse("Senegal" %in% allcountries, "Senegal is handled by Afrobarometer.", "Senegal is not handled.")
 getCountries <- function() {
 	startpage <- "http://www.afrobarometer.org"
-	mainpage <- read_html("http://www.afrobarometer.org/countries", encoding ="UTF-8")
+	mainpage <- xml2::read_html("http://www.afrobarometer.org/countries", encoding ="UTF-8")
 	countries <- mainpage %>% html_nodes('table') %>%
              extract(1:1) %>% html_nodes('td') %>%
              html_text() %>% trimws() %>%
@@ -41,7 +41,7 @@ getCountries <- function() {
 #'
 getRounds <- function(country){
     startpage <- "http://www.afrobarometer.org"
-    mainpage <- read_html("http://www.afrobarometer.org/countries", encoding ="UTF-8")
+    mainpage <- xml2::read_html("http://www.afrobarometer.org/countries", encoding ="UTF-8")
 
     countries <- mainpage %>% html_nodes('table') %>%
              extract(1:1) %>% html_nodes('td') %>%
@@ -59,14 +59,14 @@ getRounds <- function(country){
 
     combined <- data.frame(countries=countries, links=links, countrycodes=tolower(countries))
 	regexp <- paste0(substr(country,nchar(country)-3,nchar(country)),"\\sRound\\s\\d+\\sdata",sep="",collapse="")
-	countrypage <- read_html(paste(startpage,combined[grepl(tolower(country),tolower(countries)),2],sep="",collapse=""),encoding='UTF-8') %>%
+	countrypage <- xml2::read_html(paste(startpage,combined[grepl(tolower(country),tolower(countries)),2],sep="",collapse=""),encoding='UTF-8') %>%
 	               html_nodes('div a')
     if(length(countrypage[grepl('View more',html_text(countrypage))])<4) {
         stop(paste("There are not yet any data sets available for",country,sep=" ",collapse=""))
     }
 	countryrounds <- countrypage[unlist(lapply(countrypage, function(x) grepl("View more",html_text(x))))] %>%
                extract(4:4) %>% html_attr('href')%>%
-               read_html(.,encoding='UTF-8') %>% html_nodes('div a') %>%
+               xml2::read_html(.,encoding='UTF-8') %>% html_nodes('div a') %>%
                .[grepl(regexp,gsub('\\.','',html_text(.)),ignore.case=TRUE)] %>% html_text(.,trim=TRUE) %>%
                stringi::stri_conv(.,from=guess_encoding(.)[1,,drop=FALSE]$encoding)
 	return(countryrounds)
@@ -104,7 +104,7 @@ getNumberofRounds <- function(country) {
 #' allrounds
 #'
 getMergedRounds <- function() {
-  mergedpage <- read_html("http://afrobarometer.org/data/merged-data", encoding="UTF-8")
+  mergedpage <- xml2::read_html("http://afrobarometer.org/data/merged-data", encoding="UTF-8")
   Rounds <- mergedpage %>% html_nodes('li a') %>% extract(39:48) %>% html_text() %>% extract(seq(1,10,2))
   return(Rounds)
 }
